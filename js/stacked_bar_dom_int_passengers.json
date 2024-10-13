@@ -1,6 +1,6 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "data": {"url": "https://raw.githubusercontent.com/Dylan-32845480/fit3179/refs/heads/week10homework/data/2023_AirportPassengerData.csv"},
+    "data": {"url": "https://github.com/Dylan-32845480/fit3179_as2/blob/7af33fb237b413ae6e75ce1b1e1c137c06f61bb0/data/2023_AirportPassengerData.csv"},
     "width": 350,
     "height": 400,
     "title": {
