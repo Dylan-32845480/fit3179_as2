@@ -1,0 +1,180 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 900,
+    "height": 425,
+    "view": {
+        "stroke": "#4b4b4b",
+        "strokeWidth":5,
+        "strokeOpacity": 0.8
+    },
+    "title": {
+        "text": "Passengers handled by Malaysian airports in 2023",
+        "fontSize": 25,
+        "color": "#0d0155",
+        "dy": -5
+    },
+    "projection": {
+        "type": "equirectangular",
+        "center": [108.596664, 4.545008],
+        "scale": 2300
+    },
+    "data": {
+        "url": "/data/2023_AirportPassengerData.csv" 
+    },
+    "layer": [
+        {
+            "data": {
+                "values": [
+                    {"type": "ocean", "coordinates": [[-180, 90], [180, 90], [180, -90], [-180, -90]]}
+                ]
+            },
+            "mark": {
+                "type": "rect",
+                "fill": "#AEEEEE"
+            }
+        },
+        {
+            "data": {
+                "url": "/js/map_with_cities_and_gradicules.json",
+                "format": {"type": "topojson", "feature":
+                "ne_10m_admin_0_countries"}
+            },
+            "mark": {
+                "type": "geoshape",
+                "stroke": "darkgray"
+            },
+            "encoding": {
+                "color": {
+                    "condition": {
+                        "test": "datum.properties.NAME === 'Malaysia'",
+                        "value": "lightyellow"
+                    },
+                    "value": "lightgray"
+                }
+            }
+        },
+        {
+            "data": {
+                "url": "/js/map_with_cities_and_gradicules.json",
+                "format": {
+                    "type": "topojson",
+                    "feature": "ne_110m_graticules_10"
+                }
+            },
+            "mark": {
+                "type": "geoshape",
+                "fill": "lightgray",
+                "stroke": "darkgray"
+            }
+        },
+        {
+            "mark": {
+                "type": "point",
+                "size": 10,
+                "filled": true,
+                "color": "#c9c9c9"
+            },
+            "encoding": {
+                "longitude": {
+                    "field": "Longitude",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "Latitude",
+                    "type": "quantitative"
+                }
+            }
+        },
+        {
+            "mark": {
+                "type": "circle",
+                "fill": "white",
+                "fillOpacity": 0
+            },
+            "encoding": {
+                "longitude": {
+                    "field": "Longitude",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "Latitude",
+                    "type": "quantitative"
+                },
+                "size": {
+                    "field": "Total_TOTAL",
+                    "type": "quantitative",
+                    "title": "Number of Passengers",
+                    "scale": {
+                        "domain": [1019, 10578826],
+                        "range": [1, 2500]
+                    },
+                    "legend": {
+                        "values": [10000, 100000, 500000, 1000000, 2000000, 5000000, 10000000, 50000000],
+                        "direction": "vertical",
+                        "labelFontSize": 12,
+                        "labelColor": "#414142",
+                        "labelFontWeight": "bold",
+                        "titleFontSize": 16,
+                        "titlePadding": 10
+                    }
+                },
+                "stroke": {
+                    "condition": 
+                        {
+                            "param": "highlight", 
+                            "empty": false, 
+                            "value": "#e60000"
+                        },
+                    "value": "#b01313"
+                },
+                "strokeWidth": {
+                    "condition": 
+                        {
+                            "param": "highlight", 
+                            "empty": false, 
+                            "value": 3
+                        },
+                    "value": 2
+                },
+                "tooltip": [
+                    {"field": "Airports", "type": "nominal", "title": "Airport"},
+                    {"field": "Total_TOTAL", "type": "quantitative", "title": "Number of passengers"}
+                ]
+            }
+        },
+        {
+            "params": [
+                {
+                    "name": "highlight",
+                    "select": {
+                        "type": "point",
+                        "on": "mouseover",
+                        "clear": "mouseout"
+                    }
+                }
+            ],
+            "mark": {
+                "type": "circle",
+                "opacity": 0,
+                "size": 900
+            },
+            "transform": [
+                {"filter": "datum.Total_TOTAL < 1000000"}
+            ],
+            "encoding": {
+                "longitude": {
+                    "field": "Longitude",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "Latitude",
+                    "type": "quantitative"
+                },
+                "tooltip": [
+                    {"field": "Airports", "type": "nominal", "title": "Airport"},
+                    {"field": "Total_TOTAL", "type": "quantitative", "title": "Number of passengers"}
+                ]
+            }
+        }
+    ]
+}

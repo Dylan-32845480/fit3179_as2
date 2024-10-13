@@ -1,0 +1,450 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 1170,
+    "height": 500,
+    "view": {
+        "stroke": "#4b4b4b",
+        "strokeWidth":5,
+        "strokeOpacity": 0.8
+    },
+    "title": {
+        "text": "Flight Map of Malaysian Airports",
+        "fontSize": 25,
+        "color": "#0d0155",
+        "dy": -5
+    },
+    "projection": {
+        "type": "equirectangular",
+        "center": [108.596664, 4.545008],
+        "scale": 3000
+    },
+    "data": {
+        "url": "/data/2023_FlightData_with_classes.csv" 
+    },
+    "params": [
+        {
+            "name": "travel_select",
+            "bind": {
+                "input": "select",
+                "options": [
+                    null,
+                    "ALOR SETAR",
+                    "BARIO",
+                    "BINTULU",
+                    "IPOH",
+                    "JOHOR BAHRU",
+                    "KLIA",
+                    "KOTA BHARU",
+                    "KOTA KINABALU",
+                    "KUANTAN",
+                    "KUCHING",
+                    "LABUAN",
+                    "LAHAD DATU",
+                    "LANGKAWI",
+                    "LAWAS",
+                    "LIMBANG",
+                    "MARUDI",
+                    "MIRI",
+                    "MUKAH",
+                    "MULU",
+                    "PULAU PINANG",
+                    "SANDAKAN",
+                    "SIBU",
+                    "SUBANG",
+                    "TAWAU",
+                    "TERENGGANU"
+                ], "labels":[
+                    "Show All",
+                    "ALOR SETAR",
+                    "BARIO",
+                    "BINTULU",
+                    "IPOH",
+                    "JOHOR BAHRU",
+                    "KLIA",
+                    "KOTA BHARU",
+                    "KOTA KINABALU",
+                    "KUANTAN",
+                    "KUCHING",
+                    "LABUAN",
+                    "LAHAD DATU",
+                    "LANGKAWI",
+                    "LAWAS",
+                    "LIMBANG",
+                    "MARUDI",
+                    "MIRI",
+                    "MUKAH",
+                    "MULU",
+                    "PULAU PINANG",
+                    "SANDAKAN",
+                    "SIBU",
+                    "SUBANG",
+                    "TAWAU",
+                    "TERENGGANU"
+                ],  
+                "name": "Airport Selection: "
+            }
+        }
+    ],
+    "layer": [
+        {
+            "data": {
+                "values": [
+                    {"type": "ocean", "coordinates": [[-180, 90], [180, 90], [180, -90], [-180, -90]]}
+                ]
+            },
+            "mark": {
+                "type": "rect",
+                "fill": "#AEEEEE"
+            }
+        },
+        {
+            "data": {
+                "url": "/js/map_with_cities_and_gradicules.json",
+                "format": {"type": "topojson", "feature":
+                "ne_10m_admin_0_countries"}
+            },
+            "mark": {
+                "type": "geoshape",
+                "stroke": "darkgray"
+            },
+            "encoding": {
+                "color": {
+                    "condition": {
+                        "test": "datum.properties.NAME === 'Malaysia'",
+                        "value": "#06A5FF"
+                    },
+                    "value": "#BFBFBF"
+                }
+            }
+        },
+        {
+            "data": {
+                "url": "/js/map_with_cities_and_gradicules.json",
+                "format": {
+                    "type": "topojson",
+                    "feature": "ne_110m_graticules_10"
+                }
+            },
+            "mark": {
+                "type": "geoshape",
+                "fill": "lightgray",
+                "stroke": "darkgray"
+            }
+        },
+        {
+            "params": [
+                {
+                  "name": "highlight",
+                  "select": {"type": "point", "on": "mouseover", "clear": "mouseout"}
+                }
+            ],
+            "mark": {
+                "type": "line",
+                "strokeWidth": 15,
+                "stroke": "black",
+                "strokeCap": "round" 
+            },
+            "transform": [
+                {
+                    "filter": "travel_select == null || travel_select == datum.loc_1 || travel_select == datum.loc_2"
+                }
+            ],
+            "encoding": {
+                "longitude": {
+                    "field": "Longitude_1",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "Latitude_1",
+                    "type": "quantitative"
+                },
+                "longitude2": {
+                    "field": "Longitude_2"
+                },
+                "latitude2": {
+                    "field": "Latitude_2"
+                },
+                "opacity": {
+                    "condition": {"param": "highlight", "empty": false, "value": 0.3},
+                    "value": 0
+                },
+                "tooltip": [
+                    {
+                        "field": "loc_1",
+                        "type": "nominal",
+                        "title": "Destination A"
+                    },
+                    {
+                        "field": "loc_2",
+                        "type": "nominal",
+                        "title": "Destination B"
+                    },
+                    {
+                        "field": "Total",
+                        "type": "quantitative",
+                        "title": "Number of passengers"
+                    }
+                ]
+            }
+        },
+        {
+            "mark": {
+                "type": "rule",
+                "strokeWidth": 2
+            },
+            "transform": [
+                {
+                    "filter": "travel_select == null || travel_select == datum.loc_1 || travel_select == datum.loc_2"
+                }
+            ],
+            "encoding": {
+                "longitude": {
+                    "field": "Longitude_1",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "Latitude_1",
+                    "type": "quantitative"
+                },
+                "longitude2": {
+                    "field": "Longitude_2"
+                },
+                "latitude2": {
+                    "field": "Latitude_2"
+                },
+                "stroke": {
+                    "field": "Total",
+                    "type": "quantitative",
+                    "scale": {
+                        "domain": [0, 100000, 1000000, 2750000],
+                        "range": ["#feedde", "#fdae6b", "#d94801", "#421401"]
+                    },
+                    "legend": {
+                        "title": "Number of Passengers",
+                        "direction": "vertical",
+                        "labelFontSize": 12,
+                        "labelColor": "#414142",
+                        "labelFontWeight": "bold",
+                        "titleFontSize": 15,
+                        "titlePadding": 10
+                    }
+                },
+                "tooltip": [
+                    {
+                        "field": "loc_1",
+                        "type": "nominal",
+                        "title": "Destination A"
+                    },
+                    {
+                        "field": "loc_2",
+                        "type": "nominal",
+                        "title": "Destination B"
+                    },
+                    {
+                        "field": "Total",
+                        "type": "quantitative",
+                        "title": "Number of passengers"
+                    }
+                ]
+            }
+        },
+        {
+            "mark": {
+                "type": "circle",
+                "stroke": "#242323",
+                "opacity": 1
+            },
+            "encoding": {
+                "longitude": {
+                    "field": "lon",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "lat",
+                    "type": "quantitative"
+                },
+                "tooltip": [
+                    {"field": "loc", "type": "nominal", "title": "Airport"}
+                ],
+                "size": {
+                    "condition": [
+                    {
+                        "test": "travel_select == datum.loc",
+                        "value": 150
+                    },
+                    {
+                        "test": "travel_select == null",
+                        "value": 50
+                    }
+                    ],
+                    "value": 40
+                },
+                "fill": {
+                    "condition": [
+                        {
+                            "test": "travel_select == datum.loc",
+                            "value": "#db0021"
+                        }
+                        ],
+                        "value": "white"
+                },
+                "strokeWidth": {
+                    "condition": [
+                        {
+                            "test": "travel_select == datum.loc",
+                            "value": 2
+                        }
+                        ],
+                        "value": 1
+                }
+            }
+            
+        },
+        {
+            "mark": {
+                "type": "text",
+                "dx": -7,
+                "dy": -7,
+                "align": "right",
+                "fontSize": 8,
+                "fontWeight":"bold"
+            },  
+            "encoding": {
+                "longitude": {
+                    "field": "lon_tl",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "lat_tl",
+                    "type": "quantitative"
+                },
+                "text": {"field": "loc_tl", "type": "nominal"},
+                "color": {
+                    "condition": {
+                        "test": "travel_select == datum.loc_tl",
+                        "value":"#111111"
+                    },
+                    "value":"#555756"
+                },
+                "size": {
+                    "condition": {
+                        "test": "travel_select == datum.loc_tl",
+                        "value": 11
+                    },
+                    "value": 8
+                }
+            }
+        },
+        {
+            "mark": {
+                "type": "text",
+                "dx": 6,
+                "dy": -6,
+                "align": "left",
+                "fontSize": 8,
+                "fontWeight":"bold"
+            },  
+            "encoding": {
+                "longitude": {
+                    "field": "lon_tr",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "lat_tr",
+                    "type": "quantitative"
+                },
+                "text": {"field": "loc_tr", "type": "nominal"},
+                "color": {
+                    "condition": {
+                        "test": "travel_select == datum.loc_tr",
+                        "value":"#111111"
+                    },
+                    "value":"#555756"
+                },
+                "size": {
+                    "condition": {
+                        "test": "travel_select == datum.loc_tr",
+                        "value": 11
+                    },
+                    "value": 8
+                }
+            }
+        },
+        {
+            "data": {
+                "url": "/data/Airport_locations.csv" 
+            },
+            "mark": {
+                "type": "text",
+                "dx": -7,
+                "dy": 7,
+                "align": "right",
+                "fontSize": 8,
+                "fontWeight":"bold"
+            },  
+            "encoding": {
+                "longitude": {
+                    "field": "lon_bl",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "lat_bl",
+                    "type": "quantitative"
+                },
+                "text": {"field": "loc_bl", "type": "nominal"},
+                "color": {
+                    "condition": {
+                        "test": "travel_select == datum.loc_bl",
+                        "value":"#111111"
+                    },
+                    "value":"#555756"
+                },
+                "size": {
+                    "condition": {
+                        "test": "travel_select == datum.loc_bl",
+                        "value": 11
+                    },
+                    "value": 8
+                }
+            }
+        },
+        {
+            "mark": {
+                "type": "text",
+                "dx": 6,
+                "dy": 8,
+                "align": "left",
+                "fontSize": 8,
+                "fontWeight":"bold"
+            },  
+            "encoding": {
+                "longitude": {
+                    "field": "lon_br",
+                    "type": "quantitative"
+                },
+                "latitude": {
+                    "field": "lat_br",
+                    "type": "quantitative"
+                },
+                "text": {
+                    "field": "loc_br", 
+                    "type": "nominal"
+                },
+                "color": {
+                    "condition": {
+                        "test": "travel_select == datum.loc_br",
+                        "value":"#111111"
+                    },
+                    "value":"#555756"
+                },
+                "size": {
+                    "condition": {
+                        "test": "travel_select == datum.loc_br",
+                        "value": 11
+                    },
+                    "value": 8
+                }
+            }
+        }
+    ]
+}

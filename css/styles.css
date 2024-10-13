@@ -1,0 +1,198 @@
+@font-face {
+    font-family: Frutiger;
+    src: url(../font/Frutiger.ttf);
+}
+
+@font-face {
+    font-family: Frutiger Bold;
+    src: url(../font/Frutiger_bold.ttf);
+}
+
+#symbol_map {
+    left: 150px;
+	margin:auto;
+    margin-top: 20px;
+    align-self: center;
+}
+
+#stacked_bar {
+    align-self: flex-start;
+}
+#stream_graph {
+    align-self:flex-end;
+}
+.vega-bindings {
+    font-size: 15px;
+    width: 200px;
+}
+
+.arrow {
+    transform: rotate(180deg);
+    width: 50px;
+    height: 50px;
+}
+
+#bottom-right-arrow {
+    transform: rotate(135deg);
+}
+
+.line {
+    width: 40px;
+    height: 50px;
+}
+
+.symbol {
+    width: 40px;
+    height: 40px;
+}
+
+#person-img {
+    width: 27px;
+    height: 45px;
+}
+h1 {
+    font-weight: 700;
+    width: fit-content;
+    margin: auto;
+    font-size: 5rem;
+    align-items: center;
+    color: #110071;
+    border: 2px solid #290082;  /* Creates the box outline */
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    box-shadow: 0px 2.5px 10px rgba(0, 0, 0, 0.5);
+    font-family: Frutiger Bold, sans-serif;
+}
+
+h2 {
+    font-weight: 35px;
+    letter-spacing: 0.3px;
+    font-size: 32px;
+    color: white;
+    border: 2px solid #303030;
+    border-width: 3px;
+    background-color: #1c0e98; 
+    box-shadow: 1.5px 1.5px 7.5px rgba(0, 0, 0, 0.5);
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: Frutiger Bold, sans-serif;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+p {
+    font-size: large;
+    color:#303030;
+}
+#subtitle {
+    align-content: center;
+    margin: 30px 150px;
+}
+
+#sec_header_1 {
+    margin:auto;
+}
+
+#sec_header_4 {
+    margin:auto;
+}
+
+.pure-u-1-1 {
+    align-items: center;
+    align-content: center;
+    align-self: center;
+}
+
+.pure-u-1-2 {
+    box-sizing: border-box;
+    padding: 0 50px;
+}
+
+.h2-box {
+    display : flex;
+    align-items : center;
+}
+
+body {
+    background-color: lightgray;
+}
+
+.page {
+	width: 1360px;
+    background-color: white;
+    margin: auto;
+    padding: 30px;
+    padding-top: 35px;
+}
+
+.vis-container {
+    width: 100%;
+}
+
+#vis3_header {
+    color: black;
+    text-align: right;
+}
+
+.description h2,
+h1 {
+    margin-top: 0px;
+}
+
+.description-right {
+    padding-left: 20px;
+}
+
+.description-left {
+    padding-right: 20px;
+}
+
+.pure-g {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.small-font {
+    font-size: 14px;
+}
+
+#vg-tooltip-element tr:first-child td:nth-child(1){
+    font-size: 13px;
+    font-weight: bold;
+    text-align: right;
+    color: rgb(0, 0, 0);
+}
+
+#vg-tooltip-element tr:nth-child(2) td:nth-child(1){
+    font-size: 13px;
+    font-weight: bold;
+    text-align: right;
+    color: rgb(0, 0, 0);
+}
+
+#vg-tooltip-element tr:nth-child(3) td:nth-child(1){
+    font-size: 13px;
+    font-weight: bold;
+    text-align: right;
+    color: rgb(0, 0, 0);
+}
+
+#vg-tooltip-element tr:nth-child(1) td:nth-child(2){
+    font-size: 13px;
+    text-align: left;
+    color: rgb(71, 69, 69);
+}
+
+#vg-tooltip-element tr:nth-child(2) td:nth-child(2){
+    font-size: 13px;
+    text-align: left;
+    color: rgb(71, 69, 69);
+}
+
+#vg-tooltip-element tr:nth-child(3) td:nth-child(2){
+    font-size: 13px;
+    text-align: left;
+    color: rgb(71, 69, 69);
+}

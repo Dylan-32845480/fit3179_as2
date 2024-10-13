@@ -1,0 +1,45 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 450,
+    "height": 400,
+    "data": {"url": "data/airtravel_overtime.csv"},
+    "mark": {
+        "type": "area"
+    },
+    "title": {
+        "text": "Passengers by airport over time",
+        "fontSize": 24,
+        "color": "#0d0155",
+        "dy": -5,
+        "dx": 0
+    },
+    "encoding": {
+        "x": {
+            "timeUnit": "year", "field": "Year",
+            "axis": {
+                "domain": false,
+                "format": "%Y", "tickSize": 0
+            }
+        },
+        "y": {
+            "aggregate": "sum", "field": "Total",
+            "axis": null,
+            "stack": "center"
+        },
+        "color": {
+            "field":"Airports", 
+            "scale":{
+                "scheme": "category20c"
+            },
+            "legend": {
+                "direction": "vertical",
+                "orient": "right",
+                "labelFontSize": 11,
+                "labelColor": "#414142",
+                "labelFontWeight": "bold",
+                "titleFontSize": 15,
+                "titlePadding": 10
+            }
+        }
+    }
+}
